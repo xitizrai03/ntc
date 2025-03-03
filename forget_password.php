@@ -1,5 +1,18 @@
 <?php
 
+if (isset($_POST["send"])) {
+    $email = $_POST["email"];
+    $phone = $_POST["phone"];
+    $otp_random = rand(1000, 9999);
+
+
+    session_start();
+    $_SESSION["otp_email"] = $_POST["email"];
+    $_SESSION["otp_phone"] = $_POST["phone"];
+    $_SESSION["otp_otp"] = $otp_random;
+
+    header("Location: ./otp.php");
+}
 
 ?>
 
@@ -90,14 +103,16 @@
 <body>
     <div class="recovery-container">
         <h2>Password Recovery</h2>
-        <form action="otp.php" method="GET">
+        <form method="post">
             <label for="email">Enter your email Address</label>
             <input type="email" id="email" name="email" placeholder="Enter your registered email" required>
 
             <label for="phone">Enter your phone number</label>
-            <input type="number" id="phone" name="phone" placeholder="Enter your phone number"  required>
+            <input type="number" id="phone" name="phone" placeholder="Enter your phone number" required>
 
-            <button type="submit">Send </button>
+            <!-- <input type="hidden" value='<?php $otp_random; ?>' name="otp"> -->
+
+            <button type="submit" name="send">Send </button>
 
             <div class="links">
                 <p><a href="login.html">Back to Login</a></p>
