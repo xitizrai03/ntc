@@ -23,6 +23,7 @@ if (isset($_POST["update"])) {
 
         if ($otpInsertQuery->execute()) {
             echo "Password changes successfully!";
+            session_destroy();
             header("Location: login.php");
         } else {
             echo "Error : " . $mysql->error;

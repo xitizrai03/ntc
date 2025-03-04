@@ -10,9 +10,9 @@ $email =  $_SESSION["otp_email"];
 $phone = $_SESSION["otp_phone"];
 $otp = $_SESSION["otp_otp"];
 
-echo $email . "<br>";
-echo $phone . "<br>";
-echo $otp . "<br>";
+// echo $email . "<br>";
+// echo $phone . "<br>";
+// echo $otp . "<br>";
 // echo "<script> alert(" . $otp_random . ")</script>";
 
 if (isset($_POST["otp_submit"])) {
@@ -157,7 +157,7 @@ if (isset($_POST["otp_submit"])) {
     <!-- Notification Example -->
     <div class="container mt-5">
         <div class="alert alert-success" role="alert">
-            OTP <br>
+            Test OTP <br>
             <?php echo $otp . "<br>"; ?>
         </div>
     </div>
