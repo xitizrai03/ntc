@@ -2,19 +2,37 @@
 
 include "conn.php";
 
-
-$email = $_GET["email"];
-$phone = $_GET["phone"];
-
-echo $email . "<br>";
-echo $phone . "<br>";
-
-$otp_random = rand(1000, 9999);
+session_start();
 
 
-echo $otp_random . "<br>";
 
+$email =  $_SESSION["otp_email"];
+$phone = $_SESSION["otp_phone"];
+$otp = $_SESSION["otp_otp"];
 
+// echo $email . "<br>";
+// echo $phone . "<br>";
+// echo $otp . "<br>";
+// echo "<script> alert(" . $otp_random . ")</script>";
+
+if (isset($_POST["otp_submit"])) {
+
+    if ($otp == $_POST["input_otp"]) {
+        // echo "<script> alert(" . $otp . ")</script>";
+        // Prepare SQL statement to update the OTP
+        $otpInsertQuery = $mysql->prepare("UPDATE users SET otp = ? WHERE email = ? AND phone = ?");
+        $otpInsertQuery->bind_param("sss", $otp, $email, $phone);
+
+        if ($otpInsertQuery->execute()) {
+            echo "OTP stored successfully!";
+            header("Location: change_password.php");
+        } else {
+            echo "Error storing OTP: " . $mysql->error;
+        }
+    } else {
+        echo "<script> alert('wrong OTP')</script>";
+    }
+}
 
 ?>
 
@@ -24,6 +42,8 @@ echo $otp_random . "<br>";
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <title>OTP Authentication</title>
     <style>
         body {
@@ -53,7 +73,7 @@ echo $otp_random . "<br>";
         }
 
         .otp-input {
-            width: 50px;
+            width: 300px;
             height: 50px;
             font-size: 24px;
             text-align: center;
@@ -62,6 +82,7 @@ echo $otp_random . "<br>";
             border-radius: 8px;
             outline: none;
             transition: 0.3s;
+            letter-spacing: 5px;
         }
 
         .otp-input:focus {
@@ -132,78 +153,44 @@ echo $otp_random . "<br>";
 
 <body>
 
+
+    <!-- Notification Example -->
+    <div class="container mt-5">
+        <div class="alert alert-success" role="alert">
+            Test OTP <br>
+            <?php echo $otp . "<br>"; ?>
+        </div>
+    </div>
+
+
+
+
+
     <div class="otp-container">
         <!-- <form method="GET"> -->
         <h2>Enter 4-Digit OTP</h2>
         <p>Please enter the OTP you received</p>
-        <div>
-            <input type="text" maxlength="1" class="otp-input" id="otp1" oninput="moveNext(otp1, otp2)" />
-            <input type="text" maxlength="1" class="otp-input" id="otp2" oninput="moveNext(otp2, otp3)" />
-            <input type="text" maxlength="1" class="otp-input" id="otp3" oninput="moveNext(otp3, otp4)" />
-            <input type="text" maxlength="1" class="otp-input" id="otp4" oninput="moveNext(otp4, null)" />
-        </div>
+        <form method="post">
+            <div>
+                <input type="text" maxlength="4" class="otp-input" name="input_otp" required />
+            </div>
 
-        <input type="hidden" alue='<?php $otp_random; ?>' name="correct_OTP">
+            <div class="btn-container">
+                <button class="btn" type="submit" name="otp_submit">Verify OTP</button>
+                <!-- <button class="resend-btn" id="showToastButton">Resend OTP</button> -->
+            </div>
+        </form>
 
-        <input type="hidden" value='<?php $email; ?>' name="email">
+        <!-- <p class="message" id="message"></p>
+        <p id="otpDisplay" style="color: blue; font-weight: bold;"></p> OTP display for testing -->
 
-        <input type="hidden" value='<?php $phone; ?>' name="phone">
-
-        <div class="btn-container">
-            <button class="btn" onclick="verifyOTP()">Verify OTP</button>
-            <button class="resend-btn" onclick="resendOTP()">Resend OTP</button>
-        </div>
-
-        <p class="message" id="message"></p>
-        <p id="otpDisplay" style="color: blue; font-weight: bold;"></p> <!-- OTP display for testing -->
-
-        <button class="resend-btn" type="submit" name="changepassword">Change Password</button>
+        <!-- <button class="resend-btn" type="submit" name="changepassword">Change Password</button> -->
         <!-- </form> -->
     </div>
 
-    <script>
-        // let correctOTP = generateOTP(); // Generate a new OTP on page load
-
-        // function resendOTP() {
-        //     alert
-        // }
-
-        // function moveNext(current, next) {
-        //     if (current.value.length === 1 && next) {
-        //         next.focus();
-        //     }
-        // }
-
-        // document.addEventListener("keydown", function (event) {
-        //     let target = event.target;
-        //     if (event.key === "Backspace" && target.classList.contains("otp-input") && target.value === "") {
-        //         let prev = target.previousElementSibling;
-        //         if (prev) prev.focus();
-        //     }
-        // });
-
-        // function verifyOTP() {
-        //     let enteredOTP =
-        //         document.getElementById("otp1").value +
-        //         document.getElementById("otp2").value +
-        //         document.getElementById("otp3").value +
-        //         document.getElementById("otp4").value;
-
-        //     let message = document.getElementById("message");
-
-        //     if (enteredOTP === correctOTP) {
-        //         message.textContent = "✅ OTP Successful!";
-        //         message.className = "message success";
-
-
-        //     } else {
-        //         message.textContent = "❌ Authentication Failed!";
-        //         message.className = "message error";
-        //     }
-        // }
-
-
-    </script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 </body>
 
