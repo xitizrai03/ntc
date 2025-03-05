@@ -19,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["fullname"]) && isset($
 
 
     // echo "<script>alert('register Successful');</script>";
-    header("Location: registration_otp.php?otp=" . $otp_registration);
+    header("Location: registration_otp.php?registration_otp=" . $otp_registration);
 }
 
 
