@@ -3,26 +3,27 @@ include 'conn.php';
 
 // print_r($_FILES);
 
-    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["fullname"]) && isset($_POST["email"]) && isset($_POST["password"]) && isset($_POST["phone"]) && isset($_POST["dob"])) {
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["fullname"]) && isset($_POST["email"]) && isset($_POST["password"]) && isset($_POST["phone"]) && isset($_POST["dob"])) {
 
-        // echo $_POST["fullname"] ." ". $_POST["email"] ." ". $_POST["password"] ." ". $_POST["phone"] ." ". $_POST["dob"];
+    $otp_registration = rand(1000, 9999);
+    // echo $_POST["fullname"] ." ". $_POST["email"] ." ". $_POST["password"] ." ". $_POST["phone"] ." ". $_POST["dob"];
 
-        // Register User detail
-        $registerQuery = $mysql->prepare("insert into users(fullname, email, password, phone, dob)values (?,?,?,?,?);");
+    // Register User detail
+    $registerQuery = $mysql->prepare("insert into users(fullname, email, password, phone, dob, otp)values (?,?,?,?,?,?);");
 
-        $registerQuery->bind_param("sssss", $_POST["fullname"], $_POST["email"], $_POST["password"], $_POST["phone"], $_POST["dob"]);
+    $registerQuery->bind_param("ssssss", $_POST["fullname"], $_POST["email"], $_POST["password"], $_POST["phone"], $_POST["dob"], $otp_registration);
 
-        $registerQuery->execute();
-
-
-
-
-        echo "<script>alert('register Successful');</script>";
-        // header("location: login.php");
-    }
+    $registerQuery->execute();
 
 
- 
+
+
+    // echo "<script>alert('register Successful');</script>";
+    header("Location: registration_otp.php?otp=" . $otp_registration);
+}
+
+
+
 // else {
 //     echo "<script>alert('register failed');</script>";
 // }
