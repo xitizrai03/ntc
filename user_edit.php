@@ -1,18 +1,18 @@
 <?php
 include 'conn.php';
+$get_email = $_GET["email"];
 
 // print_r($_FILES);
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["fullname"]) && isset($_POST["email"]) && isset($_POST["password"]) && isset($_POST["phone"]) && isset($_POST["dob"])) {
 
     $otp_registration = rand(1000, 9999);
-    $role = "user";
     // echo $_POST["fullname"] ." ". $_POST["email"] ." ". $_POST["password"] ." ". $_POST["phone"] ." ". $_POST["dob"];
 
     // Register User detail
-    $registerQuery = $mysql->prepare("insert into users(fullname, email, password, phone, dob, otp, role)values (?,?,?,?,?,?,?);");
+    $registerQuery = $mysql->prepare("UPDATE users SET fullname = ?, email=?, password=?, phone=?, dob=? where email=?");
 
-    $registerQuery->bind_param("sssssss", $_POST["fullname"], $_POST["email"], $_POST["password"], $_POST["phone"], $_POST["dob"], $otp_registration, $role);
+    $registerQuery->bind_param("ssssss", $_POST["fullname"], $_POST["email"], $_POST["password"], $_POST["phone"], $_POST["dob"], $get_email);
 
     $registerQuery->execute();
 
@@ -20,7 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["fullname"]) && isset($
 
 
     // echo "<script>alert('register Successful');</script>";
-    header("Location: admin_dashboard.php');
+    header("Location: registration_otp.php?registration_otp=" . $otp_registration);
 }
 
 
@@ -135,7 +135,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["fullname"]) && isset($
 
 <body>
     <div class="registration-container">
-        <h2>Register</h2>
+        <h2>Update User</h2>
         <form action="" method="POST">
             <label for="fullname">Full Name</label>
             <input type="text" id="fullname" name="fullname" placeholder="Enter your full name" required>
@@ -152,13 +152,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["fullname"]) && isset($
             <label for="dob">Date of Birth</label>
             <input type="date" id="dob" name="dob" required>
 
-            <button type="submit">Register</button>
-            <button type="button" class="back-btn" onclick="window.location.href='index1.php';">Back</button>
+            <button type="submit">Update</button>
 
-            <div class="links">
-                <p>Already have an account? <a href="login.php">Login here</a></p>
-            </div>
-        </form>
     </div>
 </body>
 
