@@ -115,7 +115,7 @@ if (isset($_POST["send"])) {
             <button type="submit" name="send">Send </button>
 
             <div class="links">
-                <p><a href="login.html">Back to Login</a></p>
+                <p><a href="login.html"></a></p>
             </div>
         </form>
     </div>

@@ -29,7 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["email"]) && isset($_PO
 
 
 
-        header("Location: ./home1.php");
+        header("Location: ./index2.php");
     }
 
     //null 
@@ -155,7 +155,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["email"]) && isset($_PO
             <input type="password" id="password" name="password" placeholder="Enter your password" required>
 
             <button type="submit">Login</button>
-            <button type="button" class="back-btn" onclick="window.location.href='demo.html';">Back</button>
+            <button type="button" class="back-btn" onclick="window.location.href='index2.php';">Back</button>
 
             <div class="links">
                 <p><a href="forget_password.php">Forgot Password?</a> | <a href="registration.php">Registration</a></p>

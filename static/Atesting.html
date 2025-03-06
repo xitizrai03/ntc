@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="User Notifications and Services">
+    <title>User Notifications</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+         :root {
+            --primary-color: #0077b6;
+            --secondary-color: #005f99;
+            --gradient: linear-gradient(45deg, #054f9d, #0077b6);
+            --shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Inter', sans-serif;
+            color: #333;
+            line-height: 1.6;
+            margin: 0;
+        }
+        
+        .header {
+            background: var(--gradient);
+            padding: 15px 5%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+        }
+        
+        .logo img {
+            height: 50px;
+        }
+        
+        .nav {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .nav a,
+        .profile-button {
+            background: var(--gradient);
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            font-weight: 500;
+            border-radius: 30px;
+            transition: all 0.3s ease-in-out;
+            box-shadow: var(--shadow);
+        }
+        
+        .nav a:hover,
+        .nav a.active,
+        .profile-button:hover {
+            background: var(--secondary-color);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+        
+        .menu-icon {
+            display: none;
+            font-size: 1.8rem;
+            color: white;
+            cursor: pointer;
+        }
+        
+        @media (max-width: 768px) {
+            .menu-icon {
+                display: block;
+            }
+            .nav {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 60px;
+                right: 5%;
+                background: white;
+                width: 220px;
+                box-shadow: var(--shadow);
+                border-radius: 10px;
+                padding: 10px;
+            }
+            .nav a,
+            .profile-button {
+                display: block;
+                color: var(--primary-color);
+                padding: 10px;
+                text-align: center;
+            }
+            .nav.active {
+                display: flex;
+            }
+        }
+        
+        .profile-button {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+        
+        .profile-button img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        
+        .container {
+            margin-top: 80px;
+            padding: 40px;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <div class="logo">
+            <img src="images/logo.jpg" alt="Nepal Telecom Logo">
+        </div>
+        <div class="menu-icon" onclick="toggleMenu()">☰</div>
+        <nav class="nav" id="navbar">
+            <a href="2homepage.html">Home</a>
+            <a href="contactus.php">Contact Us</a>
+            <a href="usersetting.html">Setting</a>
+            <a href="logout.html">Log Out</a>
+            <a href="userprofile.php" class="profile-button">
+                <img src="images/profile-placeholder.jpg" alt="Profile"> Profile
+            </a>
+        </nav>
+    </header>
+
+    <main class="container">
+        <h1>Welcome to User Notifications</h1>
+    </main>
+
+    <script>
+        function toggleMenu() {
+            var nav = document.getElementById("navbar");
+            nav.classList.toggle("active");
+        }
+    </script>
+</body>
+
+</html>

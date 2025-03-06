@@ -82,7 +82,7 @@
 		<p>You have been logged out of your account.</p>
 		<button onclick="window.location.href='login.html';">Go to Login Page</button>
 		<button class="back-btn" onclick="history.back()">Back</button>
-		<a href="#">Return to Homepage</a>
+		<a href="mainhomepage.html">Return to Homepage</a>
 	</div>
 </body>
 
