@@ -1,3 +1,7 @@
+<?php
+include "conn.php";
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -122,11 +126,14 @@
         .edit-btn {
             background-color: #28a745;
             color: white;
+            margin-right: 20px;
+            text-decoration: none;
         }
 
         .delete-btn {
             background-color: #dc3545;
             color: white;
+            text-decoration: none;
         }
     </style>
 </head>
@@ -136,9 +143,9 @@
         <h2>Admin Panel</h2>
         <ul>
             <li><a href="admin_dashboard.php">Dashboard</a></li>
-            <li><a href="user_managem">Users</a></li>
-            <li><a href="settings.html">Settings</a></li>
-            <li><a href="logout.html">Logout</a></li>
+            <li><a href="admin_events.php">Events</a></li>
+            <li><a href="admin_settings.php">Settings</a></li>
+            <li><a href="logout.php">Logout</a></li>
         </ul>
     </div>
 
@@ -160,42 +167,49 @@
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Username</th>
+                    <th>Name</th>
                     <th>Email</th>
                     <th>Role</th>
                     <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>Kshitij Rai</td>
-                    <td>kshitijrai@gmail.co.com</td>
-                    <td>Admin</td>
-                    <td>
-                        <button class="action-btn edit-btn">Edit</button>
-                        <button class="action-btn delete-btn" onclick="deleteUser(this)">Delete</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>xitij Rai</td>
-                    <td>xitijrai@gmail.co.com</td>
-                    <td>Admin</td>
-                    <td>
-                        <button class="action-btn edit-btn">Edit</button>
-                        <button class="action-btn delete-btn" onclick="deleteUser(this)">Delete</button>
-                    </td>
-                </tr>
+
+
+                <?php
+                $query_user = $mysql->query("select * from users;");
+                while ($row = $query_user->fetch_assoc()) {
+
+                    $id = $row["id"];
+                    $fullname = $row["fullname"];
+                    $email = $row["email"];
+                    $role = $row["role"];
+
+                    echo "<tr>";
+                    echo "<td>$id</td>";
+                    echo "<td>$fullname</td>";
+                    echo "<td>$email</td>";
+                    echo "<td>$role</td>";
+                    echo "<td><a class='action-btn edit-btn' href='user_edit.php?email=$email'>Edit</a>" . "<a class='action-btn delete-btn' href='user_delete.php?email=$email'>Delete</a>";
+
+                    // echo '<td>
+                    //     <button class="action-btn edit-btn">Edit</button>
+                    //     <button class="action-btn delete-btn" onclick="deleteUser(this)">Delete</button>
+                    // </td>';
+                }
+
+                ?>
+
+
             </tbody>
         </table>
     </div>
 
     <script>
-        function deleteUser(button) {
-            let row = button.closest("tr");
-            row.remove();
-        }
+        // function deleteUser(button) {
+        //     let row = button.closest("tr");
+        //     row.remove();
+        // }
 
         document.getElementById("search").addEventListener("keyup", function() {
             let filter = this.value.toLowerCase();
