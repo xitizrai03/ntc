@@ -6,6 +6,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["email"]) && isset($_PO
     $email = $_POST["email"];
     // $password = MD5($_POST["password"]);
     $password = $_POST["password"];
+    $role = "user";
     // $md5password = md5($password);
 
     echo $email . "<br>";
@@ -18,8 +19,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["email"]) && isset($_PO
     //     header("Location: ./approveuser.php");
     // }
 
-    $loginQuery = $mysql->prepare("select * from users where email=? and password=?");
-    $loginQuery->bind_param("ss", $email, $password);
+    $loginQuery = $mysql->prepare("select * from users where email=? and password=? and role=?");
+    $loginQuery->bind_param("sss", $email, $password, $role);
     $loginQuery->execute();
     $loginQuery->store_result();
 
@@ -146,7 +147,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["email"]) && isset($_PO
 
 <body>
     <div class="login-container">
-        <h2>Login</h2>
+        <h2>User Login</h2>
         <form action="" method="POST">
             <label for="email">Email</label>
             <input type="text" id="email" name="email" placeholder="Enter your email" required>
@@ -158,7 +159,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["email"]) && isset($_PO
             <button type="button" class="back-btn" onclick="window.location.href='index2.php';">Back</button>
 
             <div class="links">
-                <p><a href="forget_password.php">Forgot Password?</a> | <a href="registration.php">Registration</a></p>
+                <p><a href="forget_password.php">Forgot Password?</a> | <a href="registration.php">Registration</a></p> | <a href="admin_login.php">Admin Login</a></p>
             </div>
         </form>
     </div>
