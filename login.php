@@ -29,7 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["email"]) && isset($_PO
 
 
 
-        header("Location: ./index2.php");
+        header("Location: ./home1.php");
     }
 
     //null 

@@ -1,22 +1,21 @@
-
 <?php
 // Include the session handler
-include('session.php');  
+include('session.php');
 
 // Include the database connection
-include('db_connection.php');  
+include('conn.php');
 
 // Fetch the user's data from the database
-$email = $_SESSION['email'];  
-$sql = "SELECT * FROM users WHERE email = '$email'";
-$result = mysqli_query($conn, $sql);
+// $email = $_SESSION['email'];
+// $sql = "SELECT * FROM users WHERE email = '$email'";
+// $result = mysqli_query($conn, $sql);
 
-if ($result) {
-    $user = mysqli_fetch_assoc($result);  // Fetch user data from the query result
-} else {
-    // Handle error if no user found or database issue
-    die("User not found or database error.");
-}
+// if ($result) {
+//     $user = mysqli_fetch_assoc($result);  // Fetch user data from the query result
+// } else {
+//     // Handle error if no user found or database issue
+//     die("User not found or database error.");
+// }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -35,7 +34,7 @@ if ($result) {
             color: #333;
             line-height: 1.6;
         }
-        
+
         .profile-container {
             max-width: 800px;
             margin: 50px auto;
@@ -44,12 +43,12 @@ if ($result) {
             border-radius: 15px;
             box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
         }
-        
+
         .profile-header {
             text-align: center;
             margin-bottom: 30px;
         }
-        
+
         .profile-photo {
             width: 150px;
             height: 150px;
@@ -58,20 +57,20 @@ if ($result) {
             border: 5px solid #0077b6;
             margin-bottom: 20px;
         }
-        
+
         .profile-name {
             font-size: 2rem;
             font-weight: 700;
             color: #0077b6;
             margin-bottom: 10px;
         }
-        
+
         .profile-details {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 20px;
         }
-        
+
         .profile-details div {
             background: #f1f1f1;
             padding: 15px;
@@ -79,12 +78,12 @@ if ($result) {
             font-size: 1rem;
             font-weight: 500;
         }
-        
+
         .profile-details div span {
             font-weight: 600;
             color: #0077b6;
         }
-        
+
         @media (max-width: 768px) {
             .profile-details {
                 grid-template-columns: 1fr;
@@ -130,7 +129,7 @@ if ($result) {
             </div>
         </div>
     </div>
-    <script>
+    <!-- <script>
         async function fetchUserProfile() {
             try {
                 const response = await fetch('http://localhost/userprofile/db_connection.php');
@@ -156,8 +155,8 @@ if ($result) {
 
         // Call the function when the page loads
         document.addEventListener('DOMContentLoaded', fetchUserProfile);
-    </script>
-    
+    </script> -->
+
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
