@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 07, 2025 at 04:41 AM
+-- Generation Time: Mar 07, 2025 at 05:36 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -56,6 +56,13 @@ CREATE TABLE `events` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `events`
+--
+
+INSERT INTO `events` (`id`, `title`, `description`, `image`, `created_at`) VALUES
+(1, 'help', 'help', 'uploads/2d43566402410f70d90b52d252145eae.jpg', '2025-03-07 03:52:41');
+
 -- --------------------------------------------------------
 
 --
@@ -70,16 +77,17 @@ CREATE TABLE `users` (
   `phone` varchar(255) NOT NULL,
   `dob` date NOT NULL,
   `otp` varchar(255) NOT NULL,
-  `role` varchar(255) NOT NULL
+  `role` varchar(255) NOT NULL,
+  `ban_user` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `fullname`, `email`, `password`, `phone`, `dob`, `otp`, `role`) VALUES
-(1, 'sushan khai2', 'sushan@gmail.com', 'sushan', '0123987456', '2025-03-07', '4983', 'user'),
-(3, 'admin', 'admin@gmail.com', 'admin', '0123456789', '2025-03-05', '5210', 'admin');
+INSERT INTO `users` (`id`, `fullname`, `email`, `password`, `phone`, `dob`, `otp`, `role`, `ban_user`) VALUES
+(1, 'sushan khai2', 'sushan@gmail.com', 'sushan', '0123987456', '2025-03-07', '4983', 'user', 'false'),
+(3, 'admin', 'admin@gmail.com', 'admin', '0123456789', '2025-03-05', '5210', 'admin', 'false');
 
 --
 -- Indexes for dumped tables
@@ -117,7 +125,7 @@ ALTER TABLE `admins`
 -- AUTO_INCREMENT for table `events`
 --
 ALTER TABLE `events`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `users`
