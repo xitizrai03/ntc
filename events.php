@@ -2,7 +2,7 @@
 $host = "localhost";
 $user = "root"; // Default XAMPP username
 $pass = ""; // Default XAMPP password (leave empty)
-$dbname = "event_db";
+$dbname = "ntc";
 
 $conn = new mysqli($host, $user, $pass, $dbname);
 
@@ -12,7 +12,7 @@ if ($conn->connect_error) {
 ?>
 
 <?php
-include 'db.php';
+// include 'db.php';
 
 // Handle Form Submission
 if ($_SERVER["REQUEST_METHOD"] == "POST") {

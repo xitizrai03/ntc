@@ -1,11 +1,166 @@
+<?php
+include "conn.php";
+$role = "admin";
+
+if (isset($_POST["btn_change_password"]) && isset($_POST["change_email"]) && isset($_POST["change_password"])) {
+    $passwordQuery = $mysql->prepare("UPDATE users SET password = ? where email = ? and role=?");
+
+    $passwordQuery->bind_param("sss", $_POST["change_password"], $_POST["change_email"], $role);
+
+    $passwordQuery->execute();
+}
+
+if (isset($_POST["btn_ban_user"]) && isset($_POST["ban_email"]) && isset($_POST["ban_status"])) {
+    $passwordQuery = $mysql->prepare("UPDATE users SET ban_user = ? where email=? ");
+
+    $passwordQuery->bind_param("ss", $_POST["ban_status"], $_POST["ban_email"]);
+
+    $passwordQuery->execute();
+}
+
+if (isset($_POST["btn_create_admin"]) && isset($_POST["admin_email"])  && isset($_POST["admin_role"])) {
+    $passwordQuery = $mysql->prepare("UPDATE users SET role = ? where email=? ");
+
+    $passwordQuery->bind_param("ss", $_POST["admin_role"], $_POST["admin_email"]);
+
+    $passwordQuery->execute();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Settings</title>
+    <title>Admin - User Management</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            display: flex;
+            min-height: 100vh;
+            background-color: #f0f2f6;
+        }
+
+        .sidebar {
+            width: 250px;
+            background-color: #054f9d;
+            color: white;
+            padding: 20px;
+            position: fixed;
+            height: 100vh;
+        }
+
+        .sidebar h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .sidebar ul li {
+            margin: 10px 0;
+        }
+
+        .sidebar ul li a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            padding: 10px;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+
+        .sidebar ul li a:hover {
+            background-color: #003f7d;
+        }
+
+        .main-content {
+            margin-left: 250px;
+            padding: 20px;
+            flex: 1;
+            width: calc(100% - 250px);
+        }
+
+        .header {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h2 {
+            font-size: 24px;
+        }
+
+        .search-box {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        input[type="text"],
+        select {
+            padding: 10px;
+            width: 30%;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        th,
+        td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #054f9d;
+            color: white;
+        }
+
+        .action-btn {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .edit-btn {
+            background-color: #28a745;
+            color: white;
+            margin-right: 20px;
+            text-decoration: none;
+        }
+
+        .delete-btn {
+            background-color: #dc3545;
+            color: white;
+            text-decoration: none;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -121,22 +276,17 @@
         button:hover {
             background-color: #003f7d;
         }
-
-        .section {
-            margin-bottom: 30px;
-        }
     </style>
 </head>
 
 <body>
-
     <div class="sidebar">
         <h2>Admin Panel</h2>
         <ul>
-            <li><a href="admin.html">Dashboard</a></li>
-            <li><a href="users.html">Users</a></li>
-            <li><a href="settings.html">Settings</a></li>
-            <li><a href="logout.html">Logout</a></li>
+            <li><a href="admin_dashboard.php">Dashboard</a></li>
+            <li><a href="admin_events.php">Events</a></li>
+            <li><a href="admin_settings.php">Settings</a></li>
+            <li><a href="logout.php">Logout</a></li>
         </ul>
     </div>
 
@@ -146,64 +296,53 @@
         </div>
 
         <div class="settings-container">
-
-            <!-- Website Settings -->
-            <div class="section">
-                <h3>Website Settings</h3>
-                <label for="site-title">Website Title</label>
-                <input type="text" id="site-title" placeholder="Enter website title">
-
-                <label for="registration">User Registration</label>
-                <select id="registration">
-                    <option value="enabled">Enabled</option>
-                    <option value="disabled">Disabled</option>
-                </select>
-
-                <label for="seo-keywords">SEO Keywords</label>
-                <input type="text" id="seo-keywords" placeholder="Enter SEO keywords">
-            </div>
-
-            <!-- Security Settings -->
             <div class="section">
                 <h3>Security Settings</h3>
-                <label for="change-password">Change Admin Password</label>
-                <input type="password" id="change-password" placeholder="Enter new password">
+                <form action="" method="post">
+                    <label for="change-password">Admin Email</label>
+                    <input type="email" id="change-password" placeholder="Enter Email to Change Password" name="change_email">
 
-                <label for="2fa">Enable Two-Factor Authentication</label>
-                <select id="2fa">
-                    <option value="enabled">Enabled</option>
-                    <option value="disabled">Disabled</option>
-                </select>
+                    <label for="change-password">Change Admin Password</label>
+                    <input type="password" id="change-password" placeholder="Enter new password" name="change_password">
+                    <button type="submit" name="btn_change_password" class="btn btn-primary">Update</button>
 
-                <label for="ban-user">Ban User (Enter Email)</label>
-                <input type="email" id="ban-user" placeholder="Enter email to ban">
+                </form>
+
+                <br><br>
+                <form action="" method="post">
+                    <label for="ban-user">Ban or Un-Ban User (Enter Email)</label>
+                    <input type="email" id="ban-user" placeholder="Enter email to ban" name="ban_email">
+                    <label for="ban-user">Set Status</label>
+                    <select name="ban_status">
+                        <option value="true">Ban</option>
+                        <option value="false">Un-Ban</option>
+                    </select>
+                    <button type="submit" class="btn btn-primary" name="btn_ban_user">Update</button>
+                </form>
+
+
+                <br><br>
+                <form action="" method="post">
+                    <label for="ban-user">Create Admin (Enter Email)</label>
+                    <input type="email" id="ban-user" placeholder="Enter email to Create Admin" name="admin_email">
+                    <label for="ban-user">Set Status</label>
+                    <select name="admin_role">
+                        <option value="admin">Admin</option>
+                        <option value="user">User</option>
+                    </select>
+                    <button type="submit" class="btn btn-primary" name="btn_create_admin">Update</button>
+                </form>
+
             </div>
-
-            <!-- Content Management -->
-            <div class="section">
-                <h3>Content Management</h3>
-                <button onclick="window.location.href='manage_pages.html';">Manage Pages</button>
-                <button onclick="window.location.href='manage_posts.html';">Manage Blog Posts</button>
-                <button onclick="window.location.href='manage_media.html';">Manage Media</button>
-            </div>
-
-            <!-- System Logs -->
-            <div class="section">
-                <h3>System Logs & Reports</h3>
-                <button onclick="window.location.href='activity_logs.html';">View User Activity Logs</button>
-                <button onclick="window.location.href='error_logs.html';">View Error Logs</button>
-            </div>
-
-            <!-- Backup & Restore -->
-            <div class="section">
-                <h3>Backup & Restore</h3>
-                <button onclick="alert('Backup Started!')">Backup Now</button>
-                <button onclick="alert('Restore in Progress!')">Restore from Backup</button>
-            </div>
-
         </div>
+
+
     </div>
 
+    <script>
+
+
+    </script>
 </body>
 
 </html>
