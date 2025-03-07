@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 06, 2025 at 05:12 PM
+-- Generation Time: Mar 07, 2025 at 04:41 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -20,6 +20,27 @@ SET time_zone = "+00:00";
 --
 -- Database: `ntc`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `admins`
+--
+
+CREATE TABLE `admins` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `phone` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `admins`
+--
+
+INSERT INTO `admins` (`id`, `name`, `email`, `password`, `phone`) VALUES
+(1, 'admin', 'admin@gmail.com', 'admin', '9876543210');
 
 -- --------------------------------------------------------
 
@@ -48,22 +69,27 @@ CREATE TABLE `users` (
   `password` varchar(255) NOT NULL,
   `phone` varchar(255) NOT NULL,
   `dob` date NOT NULL,
-  `otp` varchar(255) NOT NULL
+  `otp` varchar(255) NOT NULL,
+  `role` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `fullname`, `email`, `password`, `phone`, `dob`, `otp`) VALUES
-(1, 'sushan khaitu', 'sushan@gmail.com', 'sushan', '9876543210', '2025-02-24', '4983'),
-(2, 'sushan', 's@s.s', 's', 's', '2025-03-05', '9272'),
-(3, 'sushan', 's@s.s', 's', 's', '2025-03-05', '5210'),
-(4, 'sushan', 's@s.s', 's', 's', '2025-03-05', '2643');
+INSERT INTO `users` (`id`, `fullname`, `email`, `password`, `phone`, `dob`, `otp`, `role`) VALUES
+(1, 'sushan khai2', 'sushan@gmail.com', 'sushan', '0123987456', '2025-03-07', '4983', 'user'),
+(3, 'admin', 'admin@gmail.com', 'admin', '0123456789', '2025-03-05', '5210', 'admin');
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `admins`
+--
+ALTER TABLE `admins`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `events`
@@ -80,6 +106,12 @@ ALTER TABLE `users`
 --
 -- AUTO_INCREMENT for dumped tables
 --
+
+--
+-- AUTO_INCREMENT for table `admins`
+--
+ALTER TABLE `admins`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `events`
