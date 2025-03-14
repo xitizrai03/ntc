@@ -26,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["email"]) && isset($_PO
 
     if ($loginQuery->num_rows > 0) {
         session_start();
-        $_SESSION["email"] = $_POST["email"];
+        $_SESSION["admin_email"] = $_POST["email"];
 
 
 

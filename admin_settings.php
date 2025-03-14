@@ -1,5 +1,7 @@
 <?php
 include "conn.php";
+
+include "admin_session.php";
 $role = "admin";
 
 if (isset($_POST["btn_change_password"]) && isset($_POST["change_email"]) && isset($_POST["change_password"])) {

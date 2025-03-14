@@ -1,5 +1,6 @@
 <?php
 include "conn.php";
+include "admin_session.php";
 ?>
 
 <!DOCTYPE html>

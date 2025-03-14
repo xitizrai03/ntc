@@ -5,6 +5,23 @@ include('session.php');
 // Include the database connection
 include('conn.php');
 
+
+$sess_Email = $_SESSION["email"];
+
+$me_query = "select * from users where email = '" . $sess_Email . "'";
+
+$selectQuery = $mysql->query($me_query);
+while ($row = $selectQuery->fetch_assoc()) {
+    $me_id = $row["id"];
+    $me_fullname = $row["fullname"];
+    $me_email = $row["email"];
+    $me_phone = $row["phone"];
+    $me_dob = $row["dob"];
+    $me_role = $row["role"];
+    $me_ban_user = $row["ban_user"];
+    // echo $us;
+}
+
 // Fetch the user's data from the database
 // $email = $_SESSION['email'];
 // $sql = "SELECT * FROM users WHERE email = '$email'";
@@ -96,36 +113,35 @@ include('conn.php');
     <div class="profile-container">
         <!-- Profile Header -->
         <div class="profile-header">
-            <img src="https://via.placeholder.com/150" alt="User Photo" class="profile-photo">
-            <h1 class="profile-name">xitiz rai</h1>
+            <h1 class="profile-name"><?php echo $me_fullname; ?></h1>
             <p>Welcome to your profile page!</p>
         </div>
 
         <!-- Profile Details -->
         <div class="profile-details">
             <div>
-                <span>Email:</span> xitizrai03@gmail.com
+                <span>Email:</span> <?php echo $me_email; ?>
             </div>
             <div>
-                <span>Phone:</span> 98989898989
+                <span>Phone:</span> <?php echo $me_phone; ?>
             </div>
             <div>
-                <span>Address:</span> 123 Main St, City, Country
+                <span>Address:</span>Jaulakhel
             </div>
             <div>
-                <span>Date of Birth:</span> January 1, 2002
+                <span>Date of Birth:</span> <?php echo $me_dob; ?>
             </div>
             <div>
                 <span>Department:</span> NTC
             </div>
             <div>
-                <span>Job Title:</span> Software Engineer
+                <span>Role:</span> <?php echo $me_role; ?>
             </div>
             <div>
-                <span>Employee ID:</span> NT123456
+                <span>Employee ID:</span> <?php echo $me_id; ?>
             </div>
             <div>
-                <span>Join Date:</span> January 1, 2020
+                <span>Ban Status:</span> <?php echo $me_ban_user; ?>
             </div>
         </div>
     </div>

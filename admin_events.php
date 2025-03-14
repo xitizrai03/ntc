@@ -13,7 +13,7 @@ if ($conn->connect_error) {
 
 <?php
 // include 'db.php';
-
+include "admin_session.php";
 // Handle Form Submission
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $title = $_POST['title'];
