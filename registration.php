@@ -7,12 +7,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["fullname"]) && isset($
 
     $otp_registration = rand(1000, 9999);
     $role = "user";
+    $ban = "false";
     // echo $_POST["fullname"] ." ". $_POST["email"] ." ". $_POST["password"] ." ". $_POST["phone"] ." ". $_POST["dob"];
 
     // Register User detail
-    $registerQuery = $mysql->prepare("insert into users(fullname, email, password, phone, dob, otp, role)values (?,?,?,?,?,?,?);");
+    $registerQuery = $mysql->prepare("insert into users(fullname, email, password, phone, dob, otp, role, ban_user)values (?,?,?,?,?,?,?,?);");
 
-    $registerQuery->bind_param("sssssss", $_POST["fullname"], $_POST["email"], $_POST["password"], $_POST["phone"], $_POST["dob"], $otp_registration, $role);
+    $registerQuery->bind_param("ssssssss", $_POST["fullname"], $_POST["email"], $_POST["password"], $_POST["phone"], $_POST["dob"], $otp_registration, $role, $ban);
 
     $registerQuery->execute();
 

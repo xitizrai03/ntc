@@ -1,5 +1,5 @@
 <?php
-
+error_reporting(0);
 session_destroy();
 
 ?>
@@ -86,7 +86,7 @@ session_destroy();
 		<h2>Logged Out Successfully</h2>
 		<p>You have been logged out of your account.</p>
 		<button onclick="window.location.href='login.php';">Go to Login Page</button>
-		<button class="back-btn" onclick="history.back()">Back</button>
+		<!-- <button class="back-btn" onclick="history.back()">Back</button> -->
 		<a href="index1.php">Return to Homepage</a>
 	</div>
 </body>

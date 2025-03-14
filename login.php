@@ -7,6 +7,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["email"]) && isset($_PO
     // $password = MD5($_POST["password"]);
     $password = $_POST["password"];
     $role = "user";
+    $ban = "false";
     // $md5password = md5($password);
 
     echo $email . "<br>";
@@ -19,8 +20,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["email"]) && isset($_PO
     //     header("Location: ./approveuser.php");
     // }
 
-    $loginQuery = $mysql->prepare("select * from users where email=? and password=? and role=?");
-    $loginQuery->bind_param("sss", $email, $password, $role);
+    $loginQuery = $mysql->prepare("select * from users where email=? and password=? and role=? and ban_user=?");
+    $loginQuery->bind_param("ssss", $email, $password, $role, $ban);
     $loginQuery->execute();
     $loginQuery->store_result();
 

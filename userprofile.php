@@ -101,6 +101,22 @@ while ($row = $selectQuery->fetch_assoc()) {
             color: #0077b6;
         }
 
+
+        button {
+            padding: 12px 24px;
+            background-color: #054f9d;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        button:hover {
+            background-color: #003f7d;
+        }
+
         @media (max-width: 768px) {
             .profile-details {
                 grid-template-columns: 1fr;
@@ -142,6 +158,9 @@ while ($row = $selectQuery->fetch_assoc()) {
             </div>
             <div>
                 <span>Ban Status:</span> <?php echo $me_ban_user; ?>
+            </div>
+            <div>
+                <button onclick="window.location.href='user_edit.php?email=<?php echo $me_email; ?>';">Setting</button>
             </div>
         </div>
     </div>

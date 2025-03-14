@@ -1,5 +1,3 @@
-<?php include "conn.php" ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,12 +8,6 @@
     <title>User Notifications</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <link href="https://cdn.jsdelivr.net/npm/daisyui@$5/themes.css" rel="stylesheet" type="text/css" />
-
-
     <style>
         :root {
             --primary-color: #0077b6;
@@ -231,7 +223,7 @@
         </div>
 
         <nav class="nav" id="navbar">
-            <a href="home1.php">Home</a>
+            <a href="2homepage.html">Home</a>
             <a href="contactus.php">Contact Us</a>
             <a href="logout.php">Log Out</a>
             <a href="userprofile.php">Profile</a>
@@ -243,65 +235,100 @@
         <div class="section-container">
             <section class="section" id="eventsSection">
                 <div>Events and Information</div>
-
+                <button class="toggle-button" onclick="toggleContent('eventsContent')" aria-expanded="false">Detail</button>
+                <div id="eventsContent" class="content">
+                    <p>Events and information content goes here.</p>
+                    <button class="btn btn-primary" onclick="loadPage('userevents.html', 'dynamicContent', 'eventsSection')">View more Events</button>
+                </div>
             </section>
-
-            <section>
-                <ul class="list bg-base-100 rounded-box shadow-md">
-
-                    <?php
-                    $eventQuery = "select * from events  ORDER BY created_at DESC";
-
-                    $selectQuery = $mysql->query($eventQuery);
-                    while ($row = $selectQuery->fetch_assoc()) {
-                        $id = $row["id"];
-                        $title = $row["title"];
-                        $description = $row["description"];
-                        $image = $row["image"];
-                        $created_at = $row["created_at"];
-
-
-                    ?>
-                        <li class="list-row">
-                            <div><img class="size-10 rounded-box" src="<?php echo $image; ?>" /></div>
-                            <div>
-                                <div><?php echo $title; ?></div>
-                                <div class="text-xs uppercase font-semibold opacity-60"><?php echo $created_at; ?></div>
-                            </div>
-                            <p class="list-col-wrap text-xs">
-                                <?php echo $description; ?>
-                            </p>
-                            <button class="btn btn-square btn-ghost">
-                                <a href="view_events.php?event_id=<?php echo $id; ?>">
-                                    <svg class="size-[1.2em]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                        <g stroke-linejoin="round" stroke-linecap="round" stroke-width="2" fill="none" stroke="currentColor">
-                                            <path d="M6 3L20 12 6 21 6 3z"></path>
-                                        </g>
-                                    </svg>
-                                </a>
-                            </button>
-                            <button class="btn btn-square btn-ghost">
-                                <svg class="size-[1.2em]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                    <g stroke-linejoin="round" stroke-linecap="round" stroke-width="2" fill="none" stroke="currentColor">
-                                        <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path>
-                                    </g>
-                                </svg>
-                            </button>
-                        </li>
-
-                    <?php   } ?>
-
-
-
-
-                </ul>
+            <section class="section" id="notificationsSection">
+                <div>User Notifications</div>
+                <button class="toggle-button" onclick="toggleContent('notificationsContent')" aria-expanded="false">Detail</button>
+                <div id="notificationsContent" class="content">
+                    <p>Notifications content goes here.</p>
+                    <button class="btn btn-primary" onclick="loadPage('usernotification.html', 'dynamicContent', 'notificationsSection')">View more Notifications</button>
+                </div>
             </section>
         </div>
 
         <!-- Container for dynamic content -->
+        <div id="dynamicContent" class="dynamic-content"></div>
     </main>
 
+    <script>
+        function toggleMenu() {
+            var nav = document.getElementById("navbar");
+            if (nav.style.display === "flex") {
+                nav.style.display = "none";
+            } else {
+                nav.style.display = "flex";
+            }
+        }
 
+        function toggleContent(contentId) {
+            var content = document.getElementById(contentId);
+            var button = content.previousElementSibling;
+            if (content.style.display === "block") {
+                content.style.display = "none";
+                button.setAttribute("aria-expanded", "false");
+            } else {
+                content.style.display = "block";
+                button.setAttribute("aria-expanded", "true");
+            }
+        }
+
+        // Function to load external pages dynamically
+        function loadPage(url, targetId, sectionId) {
+            // Hide only the sections, not the header
+            document.querySelectorAll('.section').forEach(section => {
+                section.style.display = "none";
+            });
+
+            // Fetch and display the content
+            fetch(url)
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById(targetId).innerHTML = `
+                        <button class="close-button" onclick="restoreSections()">×</button>
+                        ${data}
+                    `;
+                })
+                .catch(error => {
+                    console.error("Error loading page:", error);
+                    document.getElementById(targetId).innerHTML = `
+                        <button class="close-button" onclick="restoreSections()">×</button>
+                        <p>Failed to load content. Please try again later.</p>
+                    `;
+                });
+        }
+
+        // Function to restore sections to their original state
+        function restoreSections() {
+            // Show all sections
+            document.querySelectorAll('.section').forEach(section => {
+                section.style.display = "flex";
+            });
+
+            // Clear dynamic content
+            document.getElementById("dynamicContent").innerHTML = "";
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            // Highlight active link
+            document.querySelectorAll('.nav a').forEach(link => {
+                if (link.href === window.location.href) {
+                    link.classList.add('active');
+                }
+            });
+
+            // Event delegation for navigation links
+            document.querySelector('.nav').addEventListener('click', function(e) {
+                if (e.target.tagName === 'A' && window.innerWidth <= 768) {
+                    document.getElementById("navbar").style.display = "none";
+                }
+            });
+        });
+    </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>

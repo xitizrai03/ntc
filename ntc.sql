@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 07, 2025 at 05:36 AM
+-- Generation Time: Mar 14, 2025 at 08:51 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -45,6 +45,27 @@ INSERT INTO `admins` (`id`, `name`, `email`, `password`, `phone`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `contacts`
+--
+
+CREATE TABLE `contacts` (
+  `id` int(11) NOT NULL,
+  `fullname` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `message` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `contacts`
+--
+
+INSERT INTO `contacts` (`id`, `fullname`, `email`, `message`) VALUES
+(1, 'sushan khaitu', 'sushan@gmail.com', 'hello'),
+(2, 'kshiti\\ rai', 'kshitrai@gmail.com', 'I want help.\r\n');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `events`
 --
 
@@ -61,7 +82,8 @@ CREATE TABLE `events` (
 --
 
 INSERT INTO `events` (`id`, `title`, `description`, `image`, `created_at`) VALUES
-(1, 'help', 'help', 'uploads/2d43566402410f70d90b52d252145eae.jpg', '2025-03-07 03:52:41');
+(1, 'help', 'help', 'uploads/2d43566402410f70d90b52d252145eae.jpg', '2025-03-07 03:52:41'),
+(2, 'test', 'This is test', 'uploads/90-905217_cat-girl-pullover-anime-neko-girl-with-blue-2883413720.png', '2025-03-14 07:41:04');
 
 -- --------------------------------------------------------
 
@@ -87,7 +109,10 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `fullname`, `email`, `password`, `phone`, `dob`, `otp`, `role`, `ban_user`) VALUES
 (1, 'sushan khai2', 'sushan@gmail.com', 'sushan', '0123987456', '2025-03-07', '4983', 'user', 'false'),
-(3, 'admin', 'admin@gmail.com', 'admin', '0123456789', '2025-03-05', '5210', 'admin', 'false');
+(3, 'admin', 'admin@gmail.com', 'admin', '0123456789', '2025-03-05', '5210', 'admin', 'false'),
+(5, 'kshitiz rai', 'xitizrai03@gmail.com', 'xitizrai03', '9876543210', '2025-03-07', '5799', 'user', 'false'),
+(9, 'lol', 'lol@gmail.com', 'lol', '9856321470', '2025-03-12', '4412', 'user', ''),
+(10, 'a', 'a@a.a', 'a', '9876543210', '2025-03-19', '8910', 'user', 'false');
 
 --
 -- Indexes for dumped tables
@@ -97,6 +122,12 @@ INSERT INTO `users` (`id`, `fullname`, `email`, `password`, `phone`, `dob`, `otp
 -- Indexes for table `admins`
 --
 ALTER TABLE `admins`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `contacts`
+--
+ALTER TABLE `contacts`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -122,16 +153,22 @@ ALTER TABLE `admins`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT for table `contacts`
+--
+ALTER TABLE `contacts`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `events`
 --
 ALTER TABLE `events`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
