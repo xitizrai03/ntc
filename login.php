@@ -160,7 +160,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["email"]) && isset($_PO
             <button type="button" class="back-btn" onclick="window.location.href='index2.php';">Back</button>
 
             <div class="links">
-                <p><a href="forget_password.php">Forgot Password?</a> | <a href="registration.php">Registration</a></p> | <a href="admin_login.php">Admin Login</a></p>
+                <p><a href="forget_password.php">Forgot Password?</a> | <a href="admin_login.php">Admin Login</a></p>
             </div>
         </form>
     </div>

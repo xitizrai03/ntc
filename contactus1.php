@@ -212,10 +212,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["fullname"]) && isset($
             <img src="images/logo.jpg" alt="Nepal Telecom Logo">
         </div>
         <div class="nav">
-            <a href="home1.php">Home</a>
+            <a href="index1.php">Home</a>
             <a href="contactus.php">Contact Us</a>
-            <a href="userprofile.php">Profile</a>
-            <a href="logout.php">Log Out</a>
+            <a href="registration.php">Sign Up</a>
+            <a href="login.php">Log In</a>
+            
         </div>
     </div>
 
