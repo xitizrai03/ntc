@@ -93,6 +93,12 @@ $result = $conn->query("SELECT * FROM events ORDER BY created_at DESC");
             </div>
             <button type="submit" class="btn btn-primary">Post Event</button>
         </form>
+        <br>
+
+        <a class="btn btn-secondary" href="a_events.php">Events</a>
+        <a class="btn btn-secondary" href="a_informations.php">Information</a>
+        <a class="btn btn-secondary" href="a_notifications.php">Notifications</a>
+
         <br><br>
 
         <section>
