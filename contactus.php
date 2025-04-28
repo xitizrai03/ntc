@@ -214,8 +214,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["fullname"]) && isset($
         <div class="nav">
             <a href="home1.php">Home</a>
             <a href="contactus.php">Contact Us</a>
+<<<<<<< Updated upstream
             <a href="userprofile.php">Profile</a>
             <a href="logout.php">Log Out</a>
+=======
+            <a href="useredit.php">Setting</a>
+            <a href="userprofile.php">Profile</a>
+            <a href="logout.php">Log out</a>
+>>>>>>> Stashed changes
         </div>
     </div>
 

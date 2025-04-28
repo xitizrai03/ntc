@@ -86,7 +86,10 @@ session_destroy();
 		<h2>Logged Out Successfully</h2>
 		<p>You have been logged out of your account.</p>
 		<button onclick="window.location.href='login.php';">Go to Login Page</button>
+<<<<<<< Updated upstream
 		<!-- <button class="back-btn" onclick="history.back()">Back</button> -->
+=======
+>>>>>>> Stashed changes
 		<a href="index1.php">Return to Homepage</a>
 	</div>
 </body>

@@ -160,7 +160,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["email"]) && isset($_PO
             <button type="button" class="back-btn" onclick="window.location.href='index1.php';">Back</button>
 
             <div class="links">
+<<<<<<< Updated upstream
                 <p><a href="forget_password.php">Forgot Password?</a> | <a href="admin_login.php">Admin Login</a></p>
+=======
+                <p><a href="forget_password.php">Forgot Password?</a> </p>  <a href="admin_login.php">Admin Login</a></p>
+>>>>>>> Stashed changes
             </div>
         </form>
     </div>

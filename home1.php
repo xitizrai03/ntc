@@ -233,8 +233,14 @@
 
         <nav class="nav" id="navbar">
             <a href="home1.php">Home</a>
+<<<<<<< Updated upstream
             <a href="userprofile.php">Profile</a>
             <a href="contactus.php">Contact Us</a>
+=======
+            <a href="contactus.php">Contact Us</a>
+            <a href="usersetting.html">Setting</a>
+            <a href="userprofile.php">Profile</a>
+>>>>>>> Stashed changes
             <a href="logout.php">Log Out</a>
         </nav>
     </header>

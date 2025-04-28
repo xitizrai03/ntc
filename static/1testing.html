@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="User Profile Page">
+    <title>User Profile</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <style>
+        body {
+            background: #f4f7f6;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .profile-container {
+            max-width: 600px;
+            margin: 50px auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .profile-photo {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid #0077b6;
+            margin-bottom: 15px;
+            position: relative;
+        }
+        
+        .upload-icon {
+            position: absolute;
+            top: 65%;
+            left: 65%;
+            background: rgba(255, 255, 255, 0.8);
+            color: black;
+            border-radius: 50%;
+            padding: 10px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .upload-icon:hover {
+            background: rgba(200, 200, 200, 0.8);
+        }
+        
+        .profile-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            text-align: left;
+        }
+        
+        .profile-details div {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+        }
+        
+        .bio-section {
+            margin-top: 20px;
+        }
+        
+        .bio-textarea {
+            width: 100%;
+            height: 100px;
+            padding: 10px;
+            border-radius: 10px;
+            border: 1px solid #ccc;
+            resize: none;
+        }
+        
+        .upload-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .upload-input {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="profile-container">
+        <div class="upload-wrapper">
+            <img src="https://via.placeholder.com/150" alt="User Photo" class="profile-photo">
+            <label for="upload" class="upload-icon">
+                <i class="fas fa-camera"></i>
+            </label>
+            <input type="file" id="upload" class="upload-input">
+        </div>
+        <h2>Xitiz Rai</h2>
+        <p>Software Engineer at NTC</p>
+
+        <div class="profile-details">
+            <div><strong>Email:</strong> xitizrai03@gmail.com</div>
+            <div><strong>Phone:</strong> 98989898989</div>
+            <div><strong>Address:</strong> 123 Main St, City, Country</div>
+            <div><strong>Date of Birth:</strong> January 1, 2002</div>
+            <div><strong>Employee ID:</strong> NT123456</div>
+            <div><strong>Join Date:</strong> January 1, 2020</div>
+        </div>
+
+        <h3>Bio</h3>
+        <div class="bio-section">
+            <textarea class="bio-textarea" placeholder="Write something about yourself..."></textarea>
+        </div>
+    </div>
+</body>
+
+</html>
