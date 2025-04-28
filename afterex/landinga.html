@@ -1,0 +1,363 @@
+include 'conn.php'; // print_r($_FILES); if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["fullname"]) && isset($_POST["email"]) && isset($_POST["password"]) && isset($_POST["phone"]) && isset($_POST["dob"])) { $otp_registration = rand(1000, 9999);
+$role = "user"; $ban = "false"; // echo $_POST["fullname"] ." ". $_POST["email"] ." ". $_POST["password"] ." ". $_POST["phone"] ." ". $_POST["dob"]; // Register User detail $registerQuery = $mysql->prepare("insert into users(fullname, email, password,
+phone, dob, otp, role, ban_user)values (?,?,?,?,?,?,?,?);"); $registerQuery->bind_param("ssssssss", $_POST["fullname"], $_POST["email"], $_POST["password"], $_POST["phone"], $_POST["dob"], $otp_registration, $role, $ban); $registerQuery->execute(); //
+echo "
+<script>
+    alert('register Successful');
+</script>"; header("Location: registration_otp.php?registration_otp=" . $otp_registration); } // else { // echo "
+<script>
+    alert('register failed');
+</script>"; // } ?>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nepal Telecom - Landing Page</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            background: #f4f4f9;
+            color: #333;
+            overflow-x: hidden;
+        }
+        
+        @keyframes slideIn {
+            from {
+                top: -100px;
+                opacity: 0;
+            }
+            to {
+                top: 0;
+                opacity: 1;
+            }
+        }
+        
+        .nav-button {
+            background: linear-gradient(45deg, #054f9d, #0077b6);
+            color: white !important;
+            padding: 8px 20px;
+            text-decoration: none;
+            font-weight: 500;
+            border-radius: 30px;
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .nav-button:hover {
+            transform: translateY(-3px);
+            background: linear-gradient(45deg, #0077b6, #054f9d);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+            color: white !important;
+        }
+        
+        .hero {
+            margin-top: 100px;
+            padding: 80px 10% 60px;
+            text-align: center;
+            background: url('images/logo.jpg') center/cover no-repeat fixed;
+            color: white;
+            min-height: 60vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 600;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin: 20px 0;
+        }
+        /* ===== NEW CONTACT SECTION ===== */
+        
+        .contact-section {
+            background-color: #ffffff;
+            padding: 60px 10%;
+            margin: 40px 0;
+        }
+        
+        .contact-section h2 {
+            color: #054f9d;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .contact-form {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .contact-info {
+            padding: 30px;
+        }
+        
+        .contact-info h4 {
+            color: #054f9d;
+            margin-bottom: 20px;
+        }
+        
+        .contact-info p {
+            margin-bottom: 15px;
+        }
+        
+        .contact-info i {
+            color: #0077b6;
+            margin-right: 10px;
+            width: 20px;
+        }
+        /* ===== EXISTING STYLES ===== */
+        
+        .cta-section {
+            text-align: center;
+            padding: 40px 10%;
+            background-color: #ffffff;
+        }
+        
+        .footer {
+            background: linear-gradient(135deg, #054f9d, #0077b6);
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+            box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .about-section {
+            padding: 60px 10%;
+            background-color: #ffffff;
+            text-align: center;
+        }
+        
+        .about-section h2 {
+            font-size: 2rem;
+            color: #054f9d;
+            margin-bottom: 20px;
+        }
+        
+        .about-section p {
+            font-size: 1.1rem;
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 30px;
+        }
+        
+        .about-img {
+            width: 100%;
+            max-width: 800px;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+        
+        .key-features {
+            background-color: #f7f7f7;
+            padding: 60px 10%;
+            text-align: center;
+        }
+        
+        .key-features h2 {
+            font-size: 2rem;
+            color: #054f9d;
+            margin-bottom: 40px;
+        }
+        
+        .features {
+            display: flex;
+            justify-content: space-between;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .feature {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 30%;
+            min-width: 280px;
+            text-align: left;
+        }
+        
+        .feature h3 {
+            font-size: 1.5rem;
+            color: #0077b6;
+            margin-bottom: 20px;
+        }
+        
+        .feature p {
+            font-size: 1rem;
+            color: #555;
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            .hero p {
+                font-size: 1rem;
+            }
+            .cta-section .nav-button {
+                display: block;
+                margin: 10px auto;
+            }
+            .about-section {
+                padding: 40px 5%;
+            }
+            .about-img {
+                max-width: 100%;
+            }
+            .features {
+                flex-direction: column;
+                align-items: center;
+            }
+            .feature {
+                width: 80%;
+                margin-bottom: 30px;
+            }
+            .contact-section {
+                padding: 40px 5%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Responsive Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow-sm" style="background: linear-gradient(135deg, #054f9d, #0077b6); animation: slideIn 0.6s ease-out;">
+        <div class="container-fluid px-4">
+            <a class="navbar-brand" href="#">
+                <img src="images/logo.jpg" alt="Nepal Telecom Logo" height="50">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse justify-content-end" id="navbarContent">
+                <ul class="navbar-nav gap-2">
+                    <li class="nav-item">
+                        <a class="nav-link nav-button" href="landinga.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link nav-button" href="#contact">Contact Us</a>
+                        <!-- Updated to section link -->
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link nav-button" href="registration.php">Sign Up</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link nav-button" href="login.php">Log In</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <h1>Welcome to Nepal Telecom</h1>
+        <p>Reliable. Fast. Everywhere. Empowering Nepal with strong connectivity.</p>
+    </section>
+
+    <section class="cta-section">
+        <h2>Get Started</h2>
+        <p>Explore our services, manage your account, or connect with support.</p>
+        <a href="login.php" class="nav-button">Log In</a>
+        <a href="registration.php" class="nav-button">Sign In</a>
+    </section>
+
+    <section class="about-section">
+        <h2>About the Website</h2>
+        <p>This website is designed to provide Nepal Telecom employees with a seamless and efficient platform for accessing important company information, staying up-to-date with events, and managing personal accounts.</p>
+        <img src="images/NepalTele.jpeg" alt="About Nepal Telecom" class="about-img">
+    </section>
+
+    <section class="key-features">
+        <h2>Key Features</h2>
+        <div class="features">
+            <div class="feature">
+                <h3>Real-Time Updates</h3>
+                <p>Stay updated with the latest news and events happening at Nepal Telecom. Get real-time notifications about important activities.</p>
+            </div>
+            <div class="feature">
+                <h3>Employee Directory</h3>
+                <p>Access an up-to-date directory of employees, including contact details and department information for efficient communication.</p>
+            </div>
+            <div class="feature">
+                <h3>Event Management</h3>
+                <p>View and manage events easily, from internal conferences to team-building activities. Admins can post and manage events directly.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== NEW CONTACT SECTION ===== -->
+    <section class="contact-section" id="contact">
+        <h2>Contact Us</h2>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="contact-form">
+                        <h4>Send us a message</h4>
+                        <form>
+                            <div class="mb-3">
+                                <input type="text" class="form-control" placeholder="Your Name" required>
+                            </div>
+                            <div class="mb-3">
+                                <input type="email" class="form-control" placeholder="Your Email" required>
+                            </div>
+                            <div class="mb-3">
+                                <textarea class="form-control" rows="4" placeholder="Your Message" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100">Send Message</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="contact-info">
+                        <h4>Contact Information</h4>
+                        <p><i class="bi bi-geo-alt-fill"></i> Nepal Telecom Headquarters, Birendra International Convention Centre, Kathmandu</p>
+                        <p><i class="bi bi-telephone-fill"></i> +977-1-1234567</p>
+                        <p><i class="bi bi-envelope-fill"></i> info@ntc.com.np</p>
+                        <p><i class="bi bi-clock-fill"></i> Sunday-Friday: 9:00 AM - 5:00 PM</p>
+
+                        <h4 class="mt-4">Follow Us</h4>
+                        <div class="social-links">
+                            <a href="#" class="text-decoration-none me-3"><i class="bi bi-facebook"></i></a>
+                            <a href="#" class="text-decoration-none me-3"><i class="bi bi-twitter"></i></a>
+                            <a href="#" class="text-decoration-none me-3"><i class="bi bi-linkedin"></i></a>
+                            <a href="#" class="text-decoration-none"><i class="bi bi-instagram"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="footer">
+        <p>&copy; 2023 Nepal Telecom. All rights reserved.</p>
+    </div>
+
+    <!-- Bootstrap Icons (for contact section) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
