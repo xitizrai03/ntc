@@ -8,14 +8,14 @@ include('conn.php');
 
 $sess_Email = $_SESSION["email"];
 
-$me_query = "select * from users where email = '" . $sess_Email . "'";
+$me_query = "select * from registration_forms where email = '" . $sess_Email . "'";
 
 $selectQuery = $mysql->query($me_query);
 while ($row = $selectQuery->fetch_assoc()) {
     $me_id = $row["id"];
-    $me_fullname = $row["fullname"];
+    $me_fullname = $row["name"];
     $me_email = $row["email"];
-    $me_phone = $row["phone"];
+    $me_phone = $row["mobile"];
     $me_dob = $row["dob"];
     $me_role = $row["role"];
     $me_ban_user = $row["ban_user"];

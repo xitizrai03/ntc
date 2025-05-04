@@ -1,50 +1,37 @@
-
 <?php
-session_start();
+include 'conn.php';
 
-$conn = new mysqli("localhost", "root", "", "ntc");
+// print_r($_FILES);
 
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["fullname"]) && isset($_POST["email"]) && isset($_POST["password"]) && isset($_POST["phone"]) && isset($_POST["dob"])) {
+
+    $otp_registration = rand(1000, 9999);
+    $role = "user";
+    $ban = "false";
+    // echo $_POST["fullname"] ." ". $_POST["email"] ." ". $_POST["password"] ." ". $_POST["phone"] ." ". $_POST["dob"];
+
+    // Register User detail
+    $registerQuery = $mysql->prepare("insert into users(fullname, email, password, phone, dob, otp, role, ban_user)values (?,?,?,?,?,?,?,?);");
+
+    $registerQuery->bind_param("ssssssss", $_POST["fullname"], $_POST["email"], $_POST["password"], $_POST["phone"], $_POST["dob"], $otp_registration, $role, $ban);
+
+    $registerQuery->execute();
+
+
+
+
+    // echo "<script>alert('register Successful');</script>";
+    header("Location: registration_otp.php?registration_otp=" . $otp_registration);
 }
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Get input safely
-    $email = $_POST['email'] ?? '';
-    $password = $_POST['password'] ?? '';
 
-    // Prepare query
-    $stmt = $conn->prepare("SELECT * FROM registration_forms WHERE email = ? AND password = ?");
-    $stmt->bind_param("ss", $email, $password);
-    $stmt->execute();
 
-    $result = $stmt->get_result();
+// else {
+//     echo "<script>alert('register failed');</script>";
+// }
 
-    if ($result->num_rows === 1) {
-        $user = $result->fetch_assoc();
 
-        // Check if user is banned
-        if ($user['ban_user'] === 'true') {
-            echo "Your account is banned.";
-            exit;
-        }
 
-        // Save user info in session
-        $_SESSION['email'] = $user['email'];
-        $_SESSION['role'] = $user['role'];
-
-        // Redirect based on role
-        if ($user['role'] === 'admin') {
-            header("Location: admin_dashboard.php");
-        } else {
-            header("Location: home1.php");
-        }
-        exit;
-    } else {
-        echo "Invalid email or password.";
-    }
-}
 ?>
 
 
@@ -55,7 +42,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Page</title>
+    <title>Registration Page</title>
     <style>
         * {
             margin: 0;
@@ -69,16 +56,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            background-color: #f0f2f6;
+            background-color: #f7f8fa;
         }
 
-        .login-container {
+        .registration-container {
             background: white;
             padding: 40px;
             border-radius: 12px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
             width: 100%;
-            max-width: 400px;
+            max-width: 450px;
             text-align: center;
         }
 
@@ -96,7 +83,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         input[type="text"],
-        input[type="password"] {
+        input[type="email"],
+        input[type="password"],
+        input[type="tel"],
+        input[type="date"] {
             width: 100%;
             padding: 10px;
             margin-bottom: 16px;
@@ -145,20 +135,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 
 <body>
-    <div class="login-container">
-        <h2>User Login</h2>
+    <div class="registration-container">
+        <h2>Register</h2>
         <form action="" method="POST">
-            <label for="email">Email</label>
-            <input type="text" id="email" name="email" placeholder="Enter your email" required>
+            <label for="fullname">Full Name</label>
+            <input type="text" id="fullname" name="fullname" placeholder="Enter your full name" required>
+
+            <label for="email">Email Address</label>
+            <input type="email" id="email" name="email" placeholder="Enter your email" required>
 
             <label for="password">Password</label>
             <input type="password" id="password" name="password" placeholder="Enter your password" required>
 
-            <button type="submit">Login</button>
+            <label for="phone">Phone Number</label>
+            <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" required>
+
+            <label for="dob">Date of Birth</label>
+            <input type="date" id="dob" name="dob" required>
+
+            <button type="submit">Register</button>
             <button type="button" class="back-btn" onclick="window.location.href='index1.php';">Back</button>
 
             <div class="links">
-                <p><a href="forget_password.php">Forgot Password?</a> | <a href="admin_login.php">Admin Login</a></p>
+                <p>Already have an account? <a href="login.php">Login here</a></p>
             </div>
         </form>
     </div>
