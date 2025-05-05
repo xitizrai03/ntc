@@ -1,7 +1,7 @@
 <?php
 error_reporting(0);
+session_start();
 session_destroy();
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -38,6 +38,7 @@ session_destroy();
 
 		h2 {
 			margin-bottom: 20px;
+			color: #054f9d;
 		}
 
 		p {
@@ -70,14 +71,6 @@ session_destroy();
 		a:hover {
 			text-decoration: underline;
 		}
-
-		.back-btn {
-			background-color: #555;
-		}
-
-		.back-btn:hover {
-			background-color: #333;
-		}
 	</style>
 </head>
 
@@ -86,10 +79,6 @@ session_destroy();
 		<h2>Logged Out Successfully</h2>
 		<p>You have been logged out of your account.</p>
 		<button onclick="window.location.href='login.php';">Go to Login Page</button>
-<<<<<<< Updated upstream
-		<!-- <button class="back-btn" onclick="history.back()">Back</button> -->
-=======
->>>>>>> Stashed changes
 		<a href="index1.php">Return to Homepage</a>
 	</div>
 </body>

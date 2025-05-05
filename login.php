@@ -1,4 +1,3 @@
-
 <?php
 session_start();
 
@@ -8,6 +7,8 @@ $conn = new mysqli("localhost", "root", "", "ntc");
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
+
+$error_message = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Get input safely
@@ -26,27 +27,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Check if user is banned
         if ($user['ban_user'] === 'true') {
-            echo "Your account is banned.";
+            $error_message = "Your account is banned.";
+        } else {
+            $_SESSION['email'] = $user['email'];
+            $_SESSION['role'] = $user['role'];
+
+            if ($user['role'] === 'admin') {
+                header("Location: admin_dashboard.php");
+            } else {
+                header("Location: home1.php");
+            }
             exit;
         }
-
-        // Save user info in session
-        $_SESSION['email'] = $user['email'];
-        $_SESSION['role'] = $user['role'];
-
-        // Redirect based on role
-        if ($user['role'] === 'admin') {
-            header("Location: admin_dashboard.php");
-        } else {
-            header("Location: home1.php");
-        }
-        exit;
     } else {
-        echo "Invalid email or password.";
+        $error_message = "Invalid email or password.";
     }
 }
 ?>
-
 
 
 <!DOCTYPE html>
@@ -85,6 +82,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         h2 {
             text-align: center;
             margin-bottom: 20px;
+        }
+
+        .error-message {
+            background-color: #ffe0e0;
+            color: #cc0000;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #cc0000;
+            border-radius: 8px;
+            font-weight: bold;
         }
 
         label {
@@ -147,6 +154,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
     <div class="login-container">
         <h2>User Login</h2>
+
+        <?php if (!empty($error_message)) : ?>
+            <div class="error-message">
+                <?php echo $error_message; ?>
+            </div>
+        <?php endif; ?>
+
         <form action="" method="POST">
             <label for="email">Email</label>
             <input type="text" id="email" name="email" placeholder="Enter your email" required>
